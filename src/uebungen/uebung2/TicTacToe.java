@@ -20,6 +20,6 @@ public class TicTacToe {
     }
     
     public void print() {
-    	
+    	System.out.println();
     }
 }
