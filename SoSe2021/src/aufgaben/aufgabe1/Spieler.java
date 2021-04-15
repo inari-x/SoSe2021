@@ -1,0 +1,56 @@
+package aufgaben.aufgabe1;
+
+import java.util.Random;
+import javax.swing.JOptionPane;
+
+public class Spieler {
+	private String name;
+	private int stand;
+	private Random r;
+	
+	Spieler(String name) {
+		stand=0;
+		this.name = name;
+		r = new Random();
+	}
+	
+	public int getStand() {
+		return this.stand;
+	}
+	
+	public boolean wuerfeln() {
+		System.out.printf("%n%nSpieler %s ist an der Reihe (bisher %d Punkte) %n -----------------------------------------------------------%n", this.name, this.stand);
+		int reihe = 0;
+		int wurf = 0;
+		boolean ende = false;
+		while(!ende) {
+			wurf = r.nextInt(6) +1;
+			System.out.printf("%s hat eine %d gewuerfelt %n", this.name, wurf);
+			if(wurf==6) {
+				System.out.printf("Versuch zu Ende %n Aktueller Spielstand von %s : %d Punkte %n Der naechste Spieler ist dran %n", this.name, this.stand);
+				ende = true;
+			}
+			else if(stand+reihe+wurf >= Spiel.siegPunkte) {
+				System.out.printf("%s hat insgesamt %d Punkte und somit gewonnen!", this.name, (stand+reihe+wurf));
+				return true;
+			}
+			else {
+				reihe += wurf;
+				System.out.printf("in diesem Versuch bisher %d Punkte -- insgesamt %d Puntke %n", reihe, (stand+reihe));
+				int dialogResult = JOptionPane.showConfirmDialog(null,  this.name+ ", wollen Sie weiter wuerfeln?", "Weiter wuerfeln?", JOptionPane.YES_NO_OPTION);
+				ende = !(dialogResult==JOptionPane.YES_OPTION);
+				if(ende ) {
+					stand += reihe;
+				}
+			}
+		}
+		return false;
+	}
+
+}
+
+	
+
+
+
+
