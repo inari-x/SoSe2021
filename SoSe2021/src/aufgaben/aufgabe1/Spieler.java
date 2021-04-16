@@ -46,6 +46,7 @@ public class Spieler {
 		}
 		return false;
 	}
+	
 
 }
 
