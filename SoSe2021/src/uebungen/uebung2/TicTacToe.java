@@ -1,5 +1,7 @@
 package uebungen.uebung2;
 
+import java.util.Random;
+
 public class TicTacToe {
 	enum State {EMPTY, RED, BLACK}; //Aufzaehlung
     State[][] field;	//mehrdimensionales Array
@@ -63,6 +65,59 @@ public class TicTacToe {
     	}
     	return false;
     }
+    
+    public void printResultat()
+	{
+		if(this.gewonnen(State.RED))
+		{
+			System.out.println("Rot hat gewonnen!!!");
+		}
+		else if(this.gewonnen(State.BLACK))
+		{
+			System.out.println("Schwarz hat gewonnen!!!");
+		}
+		else if(this.unentschieden())
+		{
+			System.out.println("Unentschieden!!!");
+		}
+	}
+	
+	public void makeRandomMove(State player)
+	{
+		if(player != State.EMPTY)
+		{
+			Random r = new Random();
+			int row = r.nextInt(3);
+			int col = r.nextInt(3);
+			while(this.field[row][col]!=State.EMPTY)
+			{
+				row = r.nextInt(3);
+				col = r.nextInt(3);
+			}
+			this.field[row][col]=player;
+		}
+	}
+	
+	public void spielen()
+	{
+		State player = State.RED;
+		while(!(this.unentschieden() || this.gewonnen(State.RED) || this.gewonnen(State.BLACK)))
+		{
+			this.makeRandomMove(player);
+			this.print();
+			this.printResultat();
+			if(player == State.RED)
+			{
+				player = State.BLACK;
+			}
+			else
+			{
+				player = State.RED;
+			}
+			
+			// player = (player == State.RED) ? State.BLACK : State.RED;
+		}
+	}
     
     boolean gewonnen() {
     	return (gewonnen(State.BLACK) || gewonnen(State.RED));
