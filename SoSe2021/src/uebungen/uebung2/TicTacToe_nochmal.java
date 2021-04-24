@@ -1,6 +1,5 @@
 package uebungen.uebung2;
 
-import uebungen.uebung2.TicTacToe.State;
 
 public class TicTacToe_nochmal {
 	
@@ -16,9 +15,13 @@ public class TicTacToe_nochmal {
 	        }
 	    }
 
-	    public void makeMove(int i, int j, State player) {
-	        if(field[i][j]==State.EMPTY && player!=State.EMPTY) { 
-	            field[i][j]=player;
+	    public void makeMove(int row, int col, State player) {
+	    	if(row>=0 && row<this.field.length
+	    			&& col>=0 && col <this.field[row].length 
+	    			&& this.field[row][col] == State.EMPTY) {
+	    		if(player!=State.EMPTY) { 
+		            this.field[row][col]=player;
+	    		}
 	        }
 	    }
 	    
