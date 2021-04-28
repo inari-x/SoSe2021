@@ -1,4 +1,4 @@
-package Vorlesung1;
+package vorlesung1;
 
 public class ArraysUndEnums {
 	

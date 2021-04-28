@@ -1,4 +1,4 @@
-package Vorlesung1;
+package vorlesung1;
 
 import javax.swing.JOptionPane;
 
