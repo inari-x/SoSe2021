@@ -1,4 +1,4 @@
-package uebungen.uebung2;
+ package uebungen.uebung2;
 
 import java.util.Random;
 
