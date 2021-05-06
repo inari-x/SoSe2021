@@ -86,6 +86,7 @@ public class ListenUndMengen {
 			System.out.println(s);
 		}
 		
+		
 		System.out.println(l1.size());
 		
 		System.out.println(l1.remove("zweiter"));
@@ -95,12 +96,14 @@ public class ListenUndMengen {
 			System.out.println(s);
 		}
 		
+		
 		System.out.println();
 		System.out.println("geloescht : " + l1.remove(1));
 
 		for(String s : l1) {
 			System.out.println(s);
 		}
+		
 		
 		System.out.println();
 		
@@ -111,6 +114,7 @@ public class ListenUndMengen {
 			System.out.println(s);
 		}
 		
+		
 		System.out.println();
 		
 		l1.addAll(l2);
@@ -119,6 +123,7 @@ public class ListenUndMengen {
 			System.out.println(s);
 		}
 		
+		
 		System.out.println();
 		
 		l1.removeAll(l2);
@@ -126,7 +131,6 @@ public class ListenUndMengen {
 		for(String s : l1) {
 			System.out.println(s);
 		}
-		
 		
 	}
 
