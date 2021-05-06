@@ -70,6 +70,7 @@ public class Uebung5 {
 		return doubletes;
 	}
 
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
