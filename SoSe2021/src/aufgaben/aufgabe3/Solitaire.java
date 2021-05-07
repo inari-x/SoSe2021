@@ -25,7 +25,7 @@ public class Solitaire {
         }
         this.field[3][3] = State.FREE;
     }
-
+    
     /*
      * Geben Sie das Spielfeld aus! Am Anfang sollte auf der
      * Konsole so ein Bild erscheinen:
@@ -38,9 +38,18 @@ public class Solitaire {
      *     o o o 
      * 
      */
-    public void print()
-    {
-
+    public void print() {
+    	for (int row = 0; row < this.field.length; row++) {
+			for (int colom = 0; colom < this.field[row].length; colom++) {
+				if(this.field[row][colom] == State.FREE || this.field[row][colom] == State.NOT) {
+					System.out.print("  ");
+				}
+				else {
+					System.out.print("o ");
+				}
+			}
+			System.out.println();
+		}
     }
 
     /*
@@ -52,11 +61,20 @@ public class Solitaire {
      *      darf kein Stein sein
      * 3. dazwischen muss ein Stein sein
      */
-    public boolean possibleFrom(int row, int col)
-    {
-
-        return false;
-    }
+    public boolean possibleFrom(int row, int colom) {
+    	if(row>=0 && row<7 && colom>=0 && colom<7 && this.field[row][colom] == State.USED)
+		{
+			// up ?
+			if(row > 1 && this.field[row-1][colom] == State.USED && this.field[row-2][colom] == State.FREE) return true;
+			// down ?
+			if(row < 5 && this.field[row+1][colom] == State.USED && this.field[row+2][colom] == State.FREE) return true;
+			// right ?
+			if(colom < 5 && this.field[row][colom+1] == State.USED && this.field[row][colom+2] == State.FREE) return true;
+			// left ?
+			if(colom > 1 && this.field[row][colom-1] == State.USED && this.field[row][colom-2] == State.FREE) return true;
+		}
+		return false;
+	}
 
     /*
      * diese Methode gibt alle Positionen (Point) zurueck,
@@ -65,10 +83,34 @@ public class Solitaire {
      */
     public Point[] possibleTo(int fromRow, int fromCol)
     {
-        if(!possibleFrom(fromRow, fromCol)) return new Point[0];
+    	int nrOfPossibleTos = 0;
+		if(!possibleFrom(fromRow, fromCol)) return new Point[nrOfPossibleTos];
+		
+		if(fromRow > 1 && this.field[fromRow-1][fromCol] == State.USED && this.field[fromRow-2][fromCol] == State.FREE) nrOfPossibleTos++;
+		if(fromRow < 5 && this.field[fromRow+1][fromCol] == State.USED && this.field[fromRow+2][fromCol] == State.FREE) nrOfPossibleTos++;
+		if(fromCol < 5 && this.field[fromRow][fromCol+1] == State.USED && this.field[fromRow][fromCol+2] == State.FREE) nrOfPossibleTos++;
+		if(fromCol > 1 && this.field[fromRow][fromCol-1] == State.USED && this.field[fromRow][fromCol-2] == State.FREE) nrOfPossibleTos++;
+		
+		Point[] tos = new Point[nrOfPossibleTos];
+		int index = 0;
+		if(fromRow > 1 && this.field[fromRow-1][fromCol] == State.USED && this.field[fromRow-2][fromCol] == State.FREE)
+			{
+				tos[index] = new Point(fromRow-2, fromCol);
+				index++;
+			}
+		if(fromRow < 5 && this.field[fromRow+1][fromCol] == State.USED && this.field[fromRow+2][fromCol] == State.FREE) 
+			{
+				tos[index] = new Point(fromRow+2, fromCol);
+				index++;
+			}
+		if(fromCol < 5 && this.field[fromRow][fromCol+1] == State.USED && this.field[fromRow][fromCol+2] == State.FREE) 
+			{
+				tos[index] = new Point(fromRow, fromCol+2);
+				index++;
+			}
+		if(fromCol > 1 && this.field[fromRow][fromCol-1] == State.USED && this.field[fromRow][fromCol-2] == State.FREE) tos[index] = new Point(fromRow, fromCol-2);
+		return tos;
 
-        // naechste Zeile muss entfernt werden!
-        return null;
     }
 
     /* 
@@ -80,21 +122,40 @@ public class Solitaire {
      */
     public Moves possibleMoves()
     {
-        Moves possibleMoves = new Moves();
+    	Moves possibleMoves = new Moves();
+		for(int row = 0; row < this.field.length; row++)
+		{
+			for(int col = 0; col < this.field[row].length; col++)
+			{
+				if(possibleFrom(row,col))
+				{
+					Point from = new Point(row,col);
+					Point[] tos = this.possibleTo(row, col);
+					for(int index=0; index<tos.length; index++)
+					{
+						Move move=new Move(from, tos[index]);
+						possibleMoves.addMove(move);
+					}
+				}
+			}
+		}
+		return possibleMoves;
+	}
 
-        // next line for debugging
-        possibleMoves.printMoves();
-        return possibleMoves;
-    }
 
     /*
      * gibt ein true zurueck, wenn im aktuellen Zustand 
      * von field[][] ueberhaupt noch ein Zug moeglich ist
      * sonst false
      */
-    public boolean movePossible()
-    {
-
+    public boolean movePossible()  {
+    	for (int row = 0; row < this.field.length; row++) {
+			for (int colom = 0; colom < this.field[row].length; colom++) {
+				if(this.field[row][colom] == State.FREE) {
+					return true;
+				}
+			}
+		}
         return false;
     }
 
@@ -105,14 +166,26 @@ public class Solitaire {
      */
     public boolean moveFirstPossible()
     {
-        if(!movePossible()) return false;
-        /*
-         *  hier einen moeglichen Zug ausfuehren
-         *  den ersten, den Sie finden (siehe
-         *  possibleMoves() )
-         */
-        return true;
-    }
+    	System.out.println("Moving the first possible move from the following list of possible moves:");
+		if(!movePossible()) return false;
+		else {
+			Moves possibleMoves = this.possibleMoves();
+			possibleMoves.printMoves();
+			try {
+				Move move = possibleMoves.getMoveAtIndex(0);
+				this.move(move);
+			
+				return true;
+			}
+			catch(IllegalArgumentException e)
+			{
+				System.out.println("Zug nicht moeglich!");
+				return false;
+			}
+		}
+	}
+
+
 
     /*
      * hier wird der Zug Move move ausgefuehrt
@@ -125,7 +198,24 @@ public class Solitaire {
      */
     public void move(Move move) throws IllegalArgumentException
     {
-
-    }
+    	Point from = move.getFrom();
+		Point to = move.getTo();
+		int fromRow = from.getRow();
+		int fromCol = from.getCol();
+		int toRow = to.getRow();
+		int toCol = to.getCol();
+		int middleRow = (fromRow + toRow) / 2;
+		int middleCol = (fromCol + toCol) / 2;
+		try {
+			this.field[fromRow][fromCol] = State.FREE;
+			this.field[middleRow][middleCol] = State.FREE;
+			this.field[toRow][toCol] = State.USED;	
+		}
+		catch(ArrayIndexOutOfBoundsException e)
+		{
+			throw new IllegalArgumentException("Zug nicht moeglich! (" + fromRow + ", " + fromCol + ") --> "
+					+ "( " + toRow + ", " + toCol + ") ");
+		}
+	}
 
 }
