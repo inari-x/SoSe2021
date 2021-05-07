@@ -2,6 +2,7 @@
 **/.classpath
 **/.project
 **/.settings
+**/hs_err_pid*.log
 **/bin
 
 
