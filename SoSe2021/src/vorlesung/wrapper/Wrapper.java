@@ -43,9 +43,16 @@ public class Wrapper {
 		System.out.println(iRef5.toString());
 		System.out.println(iRef6.toString());
 		
-		System.out.println(iRef5 == iRef6);
+		System.out.println(iRef5 == iRef6); // false - 2 verschiedene Objekte
 		
-		System.out.println(iRef5 >= iRef6);
+		System.out.println(iRef5 >= iRef6); //Auto-Unboxing 
+		
+		Double d1 = 5.5;
+		Float f1 = 3.4f;
+		Long l1 = 12345L;
+		Boolean b1 = true;
+		
+		System.out.println();
 		
 	}
 	
