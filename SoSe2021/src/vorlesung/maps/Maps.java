@@ -81,13 +81,19 @@ public class Maps {
 			System.out.println("Schluessel : " + entry.getKey() + " Wert : " + entry.getValue());
 		}
 		
-System.out.printf("%n%n----mapB mapA----%n%n");
+		System.out.printf("%n%n----mapB mapA----%n%n");
 		
 		mapB.putAll(mapA);
 		mapA.put("B", 5);
 		for(Map.Entry<String, Integer> entry : mapB.entrySet()) {
 			System.out.println("Schluessel : " + entry.getKey() + " Wert : " + entry.getValue());
 		}
+		
+		System.out.printf("%n%n----alle Werte von Map A----%n%n");
+		
+		
+		
+		
 		
 	}
 
