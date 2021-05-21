@@ -88,10 +88,14 @@ public class Maps {
 		for(Map.Entry<String, Integer> entry : mapB.entrySet()) {
 			System.out.println("Schluessel : " + entry.getKey() + " Wert : " + entry.getValue());
 		}
+		mapA.put("E", 1);
 		
 		System.out.printf("%n%n----alle Werte von Map A----%n%n");
 		
-		
+		Collection<Integer> allValues = mapA.values();
+		for(Integer val : allValues) {
+			System.out.println("value : " + val);
+		}
 		
 		
 		

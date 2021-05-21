@@ -47,13 +47,50 @@ public class StadtTest {
 	}       
 
 	public static void main(String[] args) {
+		
 		System.out.printf("%n------------ Liste --------------%n");
 		
 		List<Stadt> staedteListe = new ArrayList<>();
-		for(Stadt s : staedteListe) System.out.println(s);
-		staedte();
 		
+		Stadt[] staedte = staedte();
+		for(Stadt stadt : staedte) {
+			staedteListe.add(stadt);
 		}
+		
+		for(Stadt stadt : staedteListe) {
+			stadt.print();
+		}
+		
+		System.out.printf("%n------------ Menge --------------%n");
+		
+		Set<Stadt> staedteMenge1 = new HashSet<>();
+		
+		for(Stadt stadt : staedte()) {
+			staedteMenge1.add(stadt);
+		}
+		
+		for(Stadt stadt : staedteMenge1) {
+			stadt.print();
+		}
+		
+		Set<Stadt> staedteMenge2 = new TreeSet<>();
+		
+		System.out.printf("%n------------ Maps --------------%n");
+		
+		Map<Integer, Stadt> staedteMap = new HashMap<>();
+		Integer number = 1;
+		for(Stadt stadt : staedte()) {
+			staedteMap.put(number, stadt);
+			number++;
+		}
+		
+		for(Map.Entry<Integer, Stadt> eintrag : staedteMap.entrySet()) {
+			System.out.printf("%-3d", eintrag.getKey());
+			Stadt stadt =eintrag.getValue();
+			stadt.print();
+		}
+		
+	}
 	
 }
 

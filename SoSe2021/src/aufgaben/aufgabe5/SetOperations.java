@@ -4,69 +4,100 @@ import java.util.*;
 
 public class SetOperations {
 	
-	static Set<Integer> numbers1;
-	static Set<Integer> numbers2;
-	static Set<Integer> both;
+	Set<Integer> numbers1;
+	Set<Integer> numbers2;
+	Set<Integer> both;
 	
-	public static Set<Integer> createTreeSet() {
-		Set<Integer> set = new TreeSet<>();
-		set.addAll(numbers1);
-		set.addAll(numbers2);
-		set.addAll(both);
-		return set;
+	final static int UPPER_BOUND = 100;
+	
+	public SetOperations() {
+		this.numbers1 = new TreeSet<>();
+		this.numbers2 = new TreeSet<>();
+		this.both = new TreeSet<>();
 	}
 	
-	public static void fill() {
-		Random r = new Random();
-		int random = r.nextInt(99)+1;
-		Integer RandomObject = Integer.valueOf(random);
-		for(Integer i : numbers1) {
-			
-			numbers1.add(RandomObject);
-		}
-		for(Integer i : numbers2) {
-			numbers2.add(RandomObject);
+	public void fill() {
+		for(int i = 0; i < UPPER_BOUND; i++) {
+			Random r = new Random();
+			this.numbers1.add(Integer.valueOf(r.nextInt(UPPER_BOUND)));
+			this.numbers2.add(Integer.valueOf(r.nextInt(UPPER_BOUND)));
 		}
 	}
 	
-	
-	public static void fillBothUnion() {
-		for(Integer i : both) {
-			both.addAll(numbers1);
-			both.addAll(numbers2);
-		}
+	public void fillBothUnion() {
+		System.out.println();
+		System.out.println("----------------------------------------------------------------------------");
+		System.out.println("         A                           B                        A "+'\u222a'+" B ");
+		System.out.println("----------------------------------------------------------------------------");
+		this.both.addAll(numbers1);
+		this.both.addAll(numbers2);
 	}
 	
-	public static void fillBothIntersection() {
-		for(Integer i : both) {
-			fillBothUnion();
-			both.retainAll(numbers1);
-			both.retainAll(numbers2);
-		}
+	public void fillBothIntersection() {
+		System.out.println();
+		System.out.println("----------------------------------------------------------------------------");
+		System.out.println("         A                           B                        A "+'\u2229'+" B ");
+		System.out.println("----------------------------------------------------------------------------");
+		this.both.clear();
+		this.both.addAll(numbers1);
+		this.both.retainAll(numbers2);
 	}
 	
-//	public static void fillBothDifference() {
-//		numbers1.removeAll(numbers2);
-//		for(Integer i : both) {
-//			fillBothUnion();
-//			both.addAll(numbers1.removeAll(numbers2));
-//		}
-//	}
-	
-	public static void printVereinigung() {
-		char vereinigung = '\u222a';
-		System.out.println("---------------------------------------------------------------");
-		System.out.println("          A                    B                  A "+ vereinigung + " B       ");
-		System.out.println("---------------------------------------------------------------");
-		
-		
-		
+	public void fillBothDifference() {
+		System.out.println();
+		System.out.println("----------------------------------------------------------------------------");
+		System.out.println("         A                           B                          A-B ");
+		System.out.println("----------------------------------------------------------------------------");
+		this.both.addAll(numbers1);
+		this.both.removeAll(numbers2);
 	}
-	
-	public static void main(String[] args) {
-		printVereinigung();
-	}
-	
-	
 
+	
+	public void print() {
+		int counter1 = 0;
+		int counter2=0;
+		int counterboth=0;
+		for(int curRow=0; curRow<10; curRow++) {
+			for(int curCol=0; curCol<10; curCol++) {
+				if(this.numbers1.contains(Integer.valueOf(counter1))) {
+					System.out.print(" " + '\u25cf');
+				}
+				else {
+					System.out.print(" " + '\u2009');
+				}
+				counter1++;
+			}
+			
+			printSpaces(8);
+			
+			for(int curCol=0; curCol<10; curCol++) {
+				if(this.numbers2.contains(Integer.valueOf(counter2))) {
+					System.out.print(" "+ '\u25cf');
+				}
+				else {
+					System.out.print(" " + '\u2009');
+				}
+				counter2++;
+			}
+		
+			printSpaces(8);
+			
+			for(int curCol=0; curCol<10; curCol++){
+				if(this.both.contains(Integer.valueOf(counterboth))) {
+					System.out.print(" " + '\u25cf');
+				}
+				else{
+					System.out.print(" " + '\u2009');
+				} 
+				
+				counterboth++;
+			}
+			System.out.println();
+		}
+	}
+	
+	private void printSpaces(int nrOfSpaces){
+		for(int spaces=0; spaces<nrOfSpaces; spaces++) System.out.print(" ");
+	}	
+	
 }
