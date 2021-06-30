@@ -31,7 +31,7 @@ public class Taschenrechner extends JFrame implements ActionListener {
 		JPanel oben = new JPanel();
 		oben.setLayout(new FlowLayout());
 		this.tf = new JTextField(8);
-		tf.setEditable(false);
+		tf.setEditable(false);                           //damit man im TF nicht alphabetisch schreiben kann
 		tf.setFont(new Font("Verdana", Font.PLAIN, 24));
 		tf.setHorizontalAlignment(JTextField.RIGHT);
 		oben.add(tf);

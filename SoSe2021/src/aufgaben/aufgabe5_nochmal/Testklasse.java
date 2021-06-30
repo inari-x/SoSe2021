@@ -1,12 +1,10 @@
-package aufgaben.aufgabe2_nochmal;
+package aufgaben.aufgabe5_nochmal;
 
-public class MyIntegerMain {
+public class Testklasse {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+
 	}
+
 }
-	
-
-
-
